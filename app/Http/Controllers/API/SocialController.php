@@ -32,10 +32,9 @@ class SocialController extends Controller
 
         $validation = Validator::make($data, [
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             'password' => 'required|string|min:8',
-            'confirm_password' => 'required|string|same:password',
-            'login_type' => 'required|string',
             'role_id' => 'required|integer|in:2,3', // 2 = UserAccount, 3 = InfluencerAccount
             'image' => 'required|string',
         ]);
@@ -54,9 +53,9 @@ class SocialController extends Controller
 
         $user = User::create([
             'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'login_type' => $data['login_type'],
             'role_id' => $data['role_id'],
             'status' => 'In Review',
             'image' => $imageUrl,
