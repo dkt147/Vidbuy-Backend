@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\UserCode;
 use App\Models\UserDetail;
-use App\Services\SocialService;
+use App\Srv\SocialService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
