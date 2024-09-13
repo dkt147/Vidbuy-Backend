@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Models\Donation;
 use App\Models\Influencer;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -68,6 +69,15 @@ class InfluencerController extends Controller
         return ServiceResponse::success('Influencer Notification Setting added successfully', $userNotification);
     }
 
+    public function getDontaion()
+    {
+        $user = Auth::user();
+        $donations = Donation::where('influencer_id', $user->id)->get();
 
-
+        $totalPrice = $donations->sum('price');
+        return ServiceResponse::success('Donation retrieved successfully', [
+            'donations' => $donations,
+            'total_price' => $totalPrice,
+        ]);
+    }
 }

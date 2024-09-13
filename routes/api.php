@@ -62,6 +62,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/influencer/price-range/add', [InfluencerDetailController::class, 'InfluencerPriceRangeadd']);
     Route::get('/influencer/price-range/list', [InfluencerDetailController::class, 'InfluencerSelectedPriceRange']);
 
+    Route::get('/influencer/donation', [InfluencerController::class, 'getDontaion']);
 
 
     Route::post('/wallet/deposit/add', [WalletController::class, 'Depositadd']);
