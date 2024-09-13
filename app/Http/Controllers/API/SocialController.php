@@ -14,6 +14,7 @@ use App\Models\UserCode;
 use App\Models\UserDetail;
 use App\Srv\SocialService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -249,51 +250,44 @@ class SocialController extends Controller
     }
 
 
+    public function edit(Request $request)
+    {
+        $user = Auth::user();
+
+        $editUserData = User::find($user->id);
+
+        if (!$editUserData) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'name' => 'nullable|string',
+            'username' => 'required|string|unique:users,username,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'image' => 'nullable|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 400);
+        }
+
+        $validated = $validator->validated();
+
+        if (isset($validated['image'])) {
+            $imageUrl = Helper::getBase64ImageUrl($validated['image']);
+            if ($imageUrl) {
+                $validated['image'] = $imageUrl;
+            } else {
+                return response()->json(['error' => 'Invalid image format.'], 400);
+            }
+        }
 
 
-    // public function loginViaSocial(Request $request)
-    // {
-    //     $data = $request->all();
+        $editUserData->update($validated);
 
-    //     // Validate the required fields
-    //     $validation = Validator::make($data, [
-    //         'name' => 'required|string',
-    //         'email' => 'required|email',
-    //         'login_type' => 'required|string',
-    //         'role_id' => 'required|integer|in:2,3',
-    //     ]);
-
-    //     // If validation fails
-    //     if ($validation->fails()) {
-    //         return self::failure($validation->errors()->first());
-    //     }
-
-    //     // Retrieve the user by email
-    //     $user = User::where('email', $data['email'])->first();
-
-    //     if (!$user) {
-    //         // Create a new user
-    //         $user = new User();
-    //         $user->name = $data['name'];
-    //         $user->email = $data['email'];
-    //         $user->password = bcrypt(env('APP_KEY', '1338922534'));
-    //         $user->login_type = $data['login_type'];
-    //         $user->role_id = $data['role_id'];
-    //         $user->status = "In Review";
-    //         $user->save();
-    //     } else {
-    //         $user->login_type = $data['login_type'];
-    //         $user->save();
-    //     }
-
-    //     // Generate token
-    //     $tokenResult = $user->createToken('AuthToken');
-    //     $token = $tokenResult->accessToken;
-
-    //     return self::success('Login successful', ['user' => $user, 'token' => $token]);
-    // }
-
-
-
+        return response()->json(['success' => 'User updated successfully.', 'result' => $editUserData]);
+    }
 
 }

@@ -26,6 +26,9 @@ Route::post('/validate-otp-and-change-password', [SocialController::class, 'vali
 
 Route::middleware('auth:api')->group(function () {
 
+    Route::post('/profile/edit', [SocialController::class, 'edit']);
+
+
 
     Route::post('/user/language/add', [UserDetailController::class, 'UserLanguage']);
     Route::post('/user/notification/add', [UserDetailController::class, 'UserNotification']);
