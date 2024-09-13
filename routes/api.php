@@ -10,6 +10,7 @@ use App\Http\Controllers\API\SocialController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserDetailController;
 use App\Http\Controllers\API\VideoTypeController;
+use App\Http\Controllers\API\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,8 @@ Route::middleware('auth:api')->group(function () {
 
 
 
+    Route::post('/wallet/deposit/add', [WalletController::class, 'Depositadd']);
+    Route::get('/deposit/list', [WalletController::class, 'DepositList']);
 
 
 });
