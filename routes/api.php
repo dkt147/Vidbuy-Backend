@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\DonationController;
 use App\Http\Controllers\API\InfluencerCategoryController;
@@ -69,6 +70,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/deposit/list', [WalletController::class, 'DepositList']);
 
     Route::post('/donation/add', [DonationController::class, 'addDonation']);
+
+
+
+    Route::post('/contact-us/add', [ContactUsController::class, 'addMessage']);
+
 
 });
 
