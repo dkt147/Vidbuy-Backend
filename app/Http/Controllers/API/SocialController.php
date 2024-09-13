@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Mail\VerificationCodeMail;
+use App\Models\Category;
 use App\Models\Country;
 use App\Models\Influencer;
+use App\Models\InfluencerCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -290,7 +292,7 @@ class SocialController extends Controller
 
 
 
-    public function edit(Request $request)
+    public function Useredit(Request $request)
     {
         $user = Auth::user();
 
@@ -329,4 +331,71 @@ class SocialController extends Controller
 
         return response()->json(['success' => 'User updated successfully.', 'result' => $editUserData]);
     }
+
+
+
+    public function Influenceredit(Request $request)
+    {
+        $user = Auth::user();
+
+        // Fetch user by ID
+        $editUserData = User::find($user->id);
+
+        if (!$editUserData) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+
+        $data = $request->all();
+
+        // Validate request data
+        $validator = Validator::make($data, [
+            'name' => 'nullable|string',
+            'username' => 'required|string|unique:users,username,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'image' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'country_id' => 'nullable|exists:countries,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 400);
+        }
+
+        $validated = $validator->validated();
+
+        // Process image if provided
+        if (isset($validated['image'])) {
+            $imageUrl = Helper::getBase64ImageUrl($validated['image']);
+            if ($imageUrl) {
+                $validated['image'] = $imageUrl;
+            } else {
+                return response()->json(['error' => 'Invalid image format.'], 400);
+            }
+        }
+
+        // Update category if provided
+        if (isset($validated['category_id'])) {
+            $category = Category::find($validated['category_id']);
+            if ($category) {
+                InfluencerCategory::updateOrCreate(
+                    ['user_id' => $user->id],
+                    ['category_name' => $category->name]
+                );
+            }
+        }
+
+        // Update country if provided
+        if (isset($validated['country_id'])) {
+            $country = Country::find($validated['country_id']);
+            if ($country) {
+                $editUserData->country_name = $country->name;
+            }
+        }
+
+        // Update user data
+        $editUserData->update($validated);
+
+        return response()->json(['success' => 'User updated successfully.', 'result' => $editUserData]);
+    }
+
 }

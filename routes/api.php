@@ -29,7 +29,8 @@ Route::middleware('auth:api')->group(function () {
     // Route::post('/logout', [SocialController::class, 'logout']);
 
 
-    Route::post('/profile/edit', [SocialController::class, 'edit']);
+    Route::post('/user/profile/edit', [SocialController::class, 'Useredit']);
+    Route::post('/influencer/profile/edit', [SocialController::class, 'Influenceredit']);
     Route::post('/delete/account', [SocialController::class, 'deleteUserAccount']);
 
 
