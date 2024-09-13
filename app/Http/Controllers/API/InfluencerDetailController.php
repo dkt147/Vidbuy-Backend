@@ -37,16 +37,18 @@ class InfluencerDetailController extends Controller
             return ServiceResponse::error('Category not found');
         }
 
-        $influCategory = new InfluencerCategory();
 
-        $influCategory->user_id = $userId;
-        $influCategory->category_id = $request->input('category_id');
-        $influCategory->category_name = $category->name;
+        $influCategory = InfluencerCategory::updateOrCreate(
+            ['user_id' => $userId],
+            [
+                'category_id' => $request->input('category_id'),
+                'category_name' => $category->name,
+            ]
+        );
 
-        $influCategory->save();
-
-        return ServiceResponse::success('Influencer Category added successfully', $influCategory);
+        return ServiceResponse::success('Influencer Category processed successfully', $influCategory);
     }
+
 
 
 
@@ -81,19 +83,21 @@ class InfluencerDetailController extends Controller
         $type = VideoType::find($request->input('video_type_id'));
 
         if (!$type) {
-            return ServiceResponse::error('Category not found');
+            return ServiceResponse::error('Video type not found');
         }
 
-        $influvideotype = new InfluencerVideoType();
 
-        $influvideotype->user_id = $userId;
-        $influvideotype->video_type_id = $request->input('video_type_id');
-        $influvideotype->video_type_name = $type->name;
+        $influvideotype = InfluencerVideoType::updateOrCreate(
+            ['user_id' => $userId],
+            [
+                'video_type_id' => $request->input('video_type_id'),
+                'video_type_name' => $type->name,
+            ]
+        );
 
-        $influvideotype->save();
-
-        return ServiceResponse::success('Influencer Video type added successfully', $influvideotype);
+        return ServiceResponse::success('Influencer Video Type processed successfully', $influvideotype);
     }
+
 
     public function InfluencerSelectedVideoType()
     {
@@ -209,8 +213,4 @@ class InfluencerDetailController extends Controller
 
         return ServiceResponse::success('Selected price range retrieved successfully', $priceRanges);
     }
-
-
-
-
 }
