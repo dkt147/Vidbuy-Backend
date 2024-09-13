@@ -26,7 +26,11 @@ Route::post('/validate-otp-and-change-password', [SocialController::class, 'vali
 
 Route::middleware('auth:api')->group(function () {
 
+    // Route::post('/logout', [SocialController::class, 'logout']);
+
+
     Route::post('/profile/edit', [SocialController::class, 'edit']);
+    Route::post('/delete/account', [SocialController::class, 'deleteUserAccount']);
 
 
 

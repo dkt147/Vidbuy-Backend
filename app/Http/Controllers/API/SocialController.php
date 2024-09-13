@@ -249,6 +249,46 @@ class SocialController extends Controller
         return self::success("Password changed successfully", $res);
     }
 
+    // public function logout(Request $request)
+    // {
+    //     // Get the authenticated user
+    //     $user = Auth::user();
+
+    //     if ($user) {
+    //         // Revoke the user's current token
+    //         $user->currentAccessToken()->delete();
+
+    //         return response()->json([
+    //             'success' => 'Logout successful.',
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'error' => 'User not authenticated.',
+    //     ], 401);
+    // }
+
+
+    public function deleteUserAccount()
+    {
+        $user = Auth::user();
+
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $userId = $user->id;
+
+        User::where('id', $userId)->delete();
+
+
+        return response()->json(['message' => 'User account deleted successfully']);
+    }
+
+
+
+
 
     public function edit(Request $request)
     {
@@ -289,5 +329,4 @@ class SocialController extends Controller
 
         return response()->json(['success' => 'User updated successfully.', 'result' => $editUserData]);
     }
-
 }
