@@ -7,6 +7,7 @@ use App\Http\Controllers\API\InfluencerController;
 use App\Http\Controllers\API\InfluencerDetailController;
 use App\Http\Controllers\API\LanguageController;
 use App\Http\Controllers\API\SocialController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserDetailController;
 use App\Http\Controllers\API\VideoTypeController;
 use Illuminate\Http\Request;
@@ -81,3 +82,5 @@ Route::get('/video-types/list', [VideoTypeController::class, 'list']);
 Route::get('/price-range/list', [InfluencerDetailController::class, 'PriceRange']);
 
 
+
+Route::get('/influencer/list', [UserController::class, 'InfluencerList']);
