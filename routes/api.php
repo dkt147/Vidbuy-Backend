@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\API\CountryController;
@@ -97,3 +98,8 @@ Route::get('/price-range/list', [InfluencerDetailController::class, 'PriceRange'
 
 
 Route::get('/influencer/list', [UserController::class, 'InfluencerList']);
+
+Route::get('/admin/pending-influencer', [AdminController::class, 'pendingInfluencer']);
+Route::get('/admin/approved-influencer', [AdminController::class, 'approvedInfluencer']);
+Route::get('/admin/cancelled-influencer', [AdminController::class, 'approvedInfluencer']);
+Route::post('/admin/update-status/{id}', [AdminController::class, 'updateInfluencerStatus']);
