@@ -79,7 +79,7 @@ class SocialController extends Controller
             'country_name' => $countryName,
             'password' => Hash::make($data['password']),
             'role_id' => $data['role_id'],
-            'status' => 'In Review',
+            'status' => 'Pending',
             'image' => $imageUrl,
         ]);
 
@@ -141,7 +141,7 @@ class SocialController extends Controller
 
 
         $user = User::find($data['user_id']);
-        $user->status = 'Active';
+        $user->status = 'Approved';
         $user->save();
 
         // Optionally, delete the code after verification
@@ -181,7 +181,7 @@ class SocialController extends Controller
         }
 
         // Check if the user's status is 'In Review'
-        if ($user->status === 'In Review') {
+        if ($user->status === 'Pending') {
             return self::failure('Review your Account code sent on your gmail ');
         }
 
