@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\InfluencerCategoryController;
 use App\Http\Controllers\API\InfluencerController;
 use App\Http\Controllers\API\InfluencerDetailController;
@@ -26,30 +27,19 @@ Route::post('/validate-otp-and-change-password', [SocialController::class, 'vali
 Route::middleware('auth:api')->group(function () {
 
 
-    Route::get('/languages/list', [LanguageController::class, 'list']);
-    Route::post('/languages/add', [LanguageController::class, 'add']);
-
-    Route::post('/category/add', [CategoryController::class, 'add']);
-
-    Route::post('/video-types/add', [VideoTypeController::class, 'add']);
-
-
     Route::post('/user/language/add', [UserDetailController::class, 'UserLanguage']);
     Route::post('/user/notification/add', [UserDetailController::class, 'UserNotification']);
-
 
     Route::post('/influencer/language/add', [InfluencerController::class, 'influencerLanguage']);
     Route::post('/influencer/notification/add', [InfluencerController::class, 'influencerNotification']);
 
     // ===================================================CATEGORY=================================================================
 
-    Route::get('/category/list', [CategoryController::class, 'list']);
     Route::post('/influencer/category/add', [InfluencerDetailController::class, 'InfluencerCategoryadd']);
     Route::get('/influencer/selected/category/list', [InfluencerDetailController::class, 'InfluencerSelectedCategory']);
 
     // ===================================================VIDEO TYPE=================================================================
 
-    Route::get('/video-types/list', [VideoTypeController::class, 'list']);
     Route::post('/influencer/videotype/add', [InfluencerDetailController::class, 'InfluencerVideoTypeadd']);
     Route::get('/influencer/videotype/list', [InfluencerDetailController::class, 'InfluencerSelectedVideoType']);
     Route::post('/influencer/videotype/price/add/{influVideoTypeId}', [InfluencerDetailController::class, 'InfluencerSelectedVideoTypePriceAdd']);
@@ -57,7 +47,6 @@ Route::middleware('auth:api')->group(function () {
 
     // ===================================================PRICE RANGE=================================================================
 
-    Route::get('/price-range/list', [InfluencerDetailController::class, 'PriceRange']);
     Route::post('/influencer/price-range/add', [InfluencerDetailController::class, 'InfluencerPriceRangeadd']);
     Route::get('/influencer/price-range/list', [InfluencerDetailController::class, 'InfluencerSelectedPriceRange']);
 
@@ -66,3 +55,21 @@ Route::middleware('auth:api')->group(function () {
 
 
 });
+
+
+Route::get('/languages/list', [LanguageController::class, 'list']);
+Route::post('/languages/add', [LanguageController::class, 'add']);
+
+
+Route::post('/category/add', [CategoryController::class, 'add']);
+
+Route::post('/video-types/add', [VideoTypeController::class, 'add']);
+
+Route::get('/category/list', [CategoryController::class, 'list']);
+Route::get('/countries/list', [CountryController::class, 'list']);
+
+Route::get('/video-types/list', [VideoTypeController::class, 'list']);
+
+Route::get('/price-range/list', [InfluencerDetailController::class, 'PriceRange']);
+
+

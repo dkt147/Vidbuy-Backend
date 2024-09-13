@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'login_type',
         'role_id',
+        'country_id',
+        'country_name',
         'status',
         'firebase_token',
         'first_login',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Mail\VerificationCodeMail;
+use App\Models\Country;
 use App\Models\Influencer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +38,7 @@ class SocialController extends Controller
             'password' => 'required|string|min:8',
             'role_id' => 'required|integer|in:2,3', // 2 = UserAccount, 3 = InfluencerAccount
             'image' => 'required|string',
+            'country_id' => 'nullable|integer|exists:countries,id',
         ]);
 
         if ($validation->fails()) {
@@ -51,10 +53,27 @@ class SocialController extends Controller
 
         $imageUrl = Helper::getBase64ImageUrl($data['image']);
 
+
+        $countryId = null;
+        $countryName = null;
+
+        if ($data['role_id'] == 3 && isset($data['country_id'])) {
+
+            $country = Country::find($data['country_id']);
+            if ($country) {
+                $countryId = $data['country_id'];
+                $countryName = $country->name;
+            } else {
+                return self::failure('Invalid country_id provided.');
+            }
+        }
+
         $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
+            'country_id' => $countryId,
+            'country_name' => $countryName,
             'password' => Hash::make($data['password']),
             'role_id' => $data['role_id'],
             'status' => 'In Review',
@@ -86,8 +105,12 @@ class SocialController extends Controller
 
         Mail::to($user->email)->send(new VerificationCodeMail($verificationCode));
 
-        return self::success('User registered successfully. A verification code has been sent to your email.', ['user' => $user]);
+        return self::success('User registered successfully. A verification code has been sent to your email.', [
+            'user' => $user,
+            'code' => $verificationCode
+        ]);
     }
+
 
 
 
