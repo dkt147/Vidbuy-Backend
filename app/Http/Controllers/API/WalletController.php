@@ -44,6 +44,7 @@ class WalletController extends Controller
 
         $depositlist = Wallet::where('user_id', $user->id)->get();
 
+
         $total = $depositlist->sum('amount');
 
         $res = [
@@ -53,6 +54,4 @@ class WalletController extends Controller
 
         return ServiceResponse::success('Deposit List retrieved successfully', $res);
     }
-
-
 }

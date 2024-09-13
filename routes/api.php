@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\CountryController;
+use App\Http\Controllers\API\DonationController;
 use App\Http\Controllers\API\InfluencerCategoryController;
 use App\Http\Controllers\API\InfluencerController;
 use App\Http\Controllers\API\InfluencerDetailController;
 use App\Http\Controllers\API\LanguageController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\SocialController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserDetailController;
@@ -65,6 +67,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/wallet/deposit/add', [WalletController::class, 'Depositadd']);
     Route::get('/deposit/list', [WalletController::class, 'DepositList']);
 
+    Route::post('/donation/add', [DonationController::class, 'addDonation']);
 
 });
 
