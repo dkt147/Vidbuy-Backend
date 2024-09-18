@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\API\CountryController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\DonationController;
 use App\Http\Controllers\API\InfluencerCategoryController;
 use App\Http\Controllers\API\InfluencerController;
@@ -103,3 +104,9 @@ Route::get('/admin/pending-influencer', [AdminController::class, 'pendingInfluen
 Route::get('/admin/approved-influencer', [AdminController::class, 'approvedInfluencer']);
 Route::get('/admin/cancelled-influencer', [AdminController::class, 'approvedInfluencer']);
 Route::post('/admin/update-status/{id}', [AdminController::class, 'updateInfluencerStatus']);
+
+
+
+
+Route::get('/dashboard/categories', [DashboardController::class, 'dashboardCategory']);
+Route::get('/dashboard/recently-added', [DashboardController::class, 'dashboardRecentlyAdded']);

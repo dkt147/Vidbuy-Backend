@@ -42,7 +42,6 @@ class InfluencerDetailController extends Controller
             ['user_id' => $userId],
             [
                 'category_id' => $request->input('category_id'),
-                'category_name' => $category->name,
             ]
         );
 
