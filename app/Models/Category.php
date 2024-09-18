@@ -14,5 +14,8 @@ class Category extends Model
         'image'
     ];
 
-
+    public function streams()
+    {
+        return $this->hasMany(Stream::class, 'category_id');
+    }
 }

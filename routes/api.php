@@ -16,6 +16,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserDetailController;
 use App\Http\Controllers\API\VideoTypeController;
 use App\Http\Controllers\API\WalletController;
+use App\Http\Controllers\StreamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -76,6 +77,10 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('/contact-us/add', [ContactUsController::class, 'addMessage']);
+
+
+    Route::post('/stream/add', [StreamController::class, 'add']);
+    Route::get('/stream/list', [StreamController::class, 'list']);
 
 
 });

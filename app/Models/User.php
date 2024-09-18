@@ -56,5 +56,8 @@ class User extends Authenticatable
         ];
     }
 
-
+    public function streams()
+    {
+        return $this->hasMany(Stream::class, 'user_id');
+    }
 }
