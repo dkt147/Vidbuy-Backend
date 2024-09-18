@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DashboardResource;
 use App\Models\Category;
 use App\Models\InfluencerCategory;
 use App\Models\User;
@@ -48,9 +49,16 @@ class DashboardController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate($perPage, ['*'], 'page', $page);
 
+
+        $usersResource = $users->map(function ($user) {
+            return new DashboardResource($user);
+        });
+
         return ServiceResponse::success('Dashboard recently added retrieved successfully', [
-            'users' => $users
+            'users' => $usersResource,
+            'pagination' => $users->toArray(),
         ]);
     }
+
 
 }
