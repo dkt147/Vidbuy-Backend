@@ -85,7 +85,6 @@ Route::middleware('auth:api')->group(function () {
 
 
 
-    Route::post('/giveaway/add', [GiveawayController::class, 'add']);
     Route::delete('/giveaway/delete/{id}', [GiveawayController::class, 'delete']);
     Route::get('/giveaway/list', [GiveawayController::class, 'list']);
 
@@ -93,7 +92,14 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/giveaway/dislike', [GiveawayController::class, 'dislikeByUser']);
 
 
+    Route::post('/influencer/donate', [GiveawayController::class, 'donateInfluencer']);
 });
+Route::post('/giveaway/add', [GiveawayController::class, 'add']);
+Route::post('/influencer/giveaway/add', [GiveawayController::class, 'addInfluencerOnGiveawy']);
+Route::post('/influencer/giveaway/detail/{id}', [GiveawayController::class, 'giveawayDetail']);
+Route::get('/influencer/giveaway/doner/detail/{id}', [GiveawayController::class, 'giveawayDonerDetail']);
+
+
 
 Route::post('/stream/user/add', [StreamUserController::class, 'add']);
 
