@@ -122,6 +122,8 @@ Route::get('/price-range/list', [InfluencerDetailController::class, 'PriceRange'
 
 Route::get('/influencer/list', [UserController::class, 'InfluencerList']);
 
+Route::get('/influencer/list/by/category', [UserController::class, 'InfluencerListByCategory']);
+
 Route::get('/admin/pending-influencer', [AdminController::class, 'pendingInfluencer']);
 Route::get('/admin/approved-influencer', [AdminController::class, 'approvedInfluencer']);
 Route::get('/admin/cancelled-influencer', [AdminController::class, 'approvedInfluencer']);
