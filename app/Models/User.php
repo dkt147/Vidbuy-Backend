@@ -60,4 +60,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Stream::class, 'user_id');
     }
+    public function giveaways()
+    {
+        return $this->hasMany(Giveaway::class, 'user_id');
+    }
 }

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
+use App\Http\Controllers\Controller;
 use App\Models\Stream;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +13,6 @@ use Illuminate\Support\Facades\Validator;
 class StreamController extends Controller
 {
     //
-
-
-
 
 
 

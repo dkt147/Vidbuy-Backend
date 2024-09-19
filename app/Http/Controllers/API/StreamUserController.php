@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Helpers\ServiceResponse;
 use App\Models\StreamUser;
 use Illuminate\Http\Request;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 class StreamUserController extends Controller
 {
     //
-
 
     public function add(Request $request)
     {
@@ -39,6 +39,4 @@ class StreamUserController extends Controller
 
         return ServiceResponse::success('Stream added successfully', $Stream);
     }
-
-
 }

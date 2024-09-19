@@ -6,18 +6,19 @@ use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\DonationController;
+use App\Http\Controllers\API\GiveawayController;
 use App\Http\Controllers\API\InfluencerCategoryController;
 use App\Http\Controllers\API\InfluencerController;
 use App\Http\Controllers\API\InfluencerDetailController;
 use App\Http\Controllers\API\LanguageController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\SocialController;
+use App\Http\Controllers\API\StreamController;
+use App\Http\Controllers\API\StreamUserController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserDetailController;
 use App\Http\Controllers\API\VideoTypeController;
 use App\Http\Controllers\API\WalletController;
-use App\Http\Controllers\StreamController;
-use App\Http\Controllers\StreamUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -81,6 +82,15 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('/stream/add', [StreamController::class, 'add']);
+
+
+
+    Route::post('/giveaway/add', [GiveawayController::class, 'add']);
+    Route::delete('/giveaway/delete/{id}', [GiveawayController::class, 'delete']);
+    Route::get('/giveaway/list', [GiveawayController::class, 'list']);
+
+    Route::post('/giveaway/like/add', [GiveawayController::class, 'likeByUser']);
+    Route::post('/giveaway/dislike', [GiveawayController::class, 'dislikeByUser']);
 
 
 });
