@@ -7,35 +7,50 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DashboardResource;
 use App\Models\Category;
 use App\Models\InfluencerCategory;
+use App\Models\Stream;
+use App\Models\StreamUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     //
-    public function dashboardCategory(Request $request)
+    public function list(Request $request)
     {
 
-        $search = $request->input('search', '');
-        $page = $request->input('page', 1);
+        $streams = Stream::with(['user', 'category'])->get();
 
-        $categoryIds = InfluencerCategory::pluck('category_id');
-
-        $categoryDetails = Category::whereIn('id', $categoryIds)->get();
-
-
-        $list = InfluencerCategory::query();
-        if (!empty($search)) {
-            $list->where('name', 'like', '%' . $search . '%');
-        }
-
-        $list = $list->paginate(10, ['*'], 'page', $page);
-
-        return ServiceResponse::success('Dashboard categories retrieved successfully', [
-            'categories' => $categoryDetails,
-            'list' => $list
-        ]);
+        return ServiceResponse::success('Streams retrieved successfully', $streams);
     }
+
+    public function Trendinglist(Request $request)
+    {
+
+        $streams = Stream::with(['user', 'category'])->get();
+
+        $topUsers = StreamUser::select('user_id', DB::raw('count(*) as total_streams'))
+            ->groupBy('user_id')
+            ->orderBy('total_streams', 'desc')
+            ->take(3)
+            ->get();
+
+
+        $userIds = $topUsers->pluck('user_id');
+
+
+        $users = User::whereIn('id', $userIds)->get();
+
+
+        $result = [
+            'streams' => $streams,
+            'top_users' => $users,
+        ];
+
+        return ServiceResponse::success('Streams and top users retrieved successfully', $result);
+    }
+
+
 
     public function dashboardRecentlyAdded(Request $request)
     {
@@ -59,6 +74,4 @@ class DashboardController extends Controller
             'pagination' => $users->toArray(),
         ]);
     }
-
-
 }

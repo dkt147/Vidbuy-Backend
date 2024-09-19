@@ -14,13 +14,7 @@ class StreamController extends Controller
     //
 
 
-    public function list(Request $request)
-    {
 
-        $streams = Stream::with(['user', 'category'])->get();
-
-        return ServiceResponse::success('Streams retrieved successfully', $streams);
-    }
 
 
 

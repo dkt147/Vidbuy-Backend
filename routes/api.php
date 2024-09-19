@@ -17,6 +17,7 @@ use App\Http\Controllers\API\UserDetailController;
 use App\Http\Controllers\API\VideoTypeController;
 use App\Http\Controllers\API\WalletController;
 use App\Http\Controllers\StreamController;
+use App\Http\Controllers\StreamUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,11 +81,11 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('/stream/add', [StreamController::class, 'add']);
-    Route::get('/stream/list', [StreamController::class, 'list']);
 
 
 });
 
+Route::post('/stream/user/add', [StreamUserController::class, 'add']);
 
 Route::get('/languages/list', [LanguageController::class, 'list']);
 Route::post('/languages/add', [LanguageController::class, 'add']);
@@ -115,3 +116,6 @@ Route::post('/admin/update-status/{id}', [AdminController::class, 'updateInfluen
 
 Route::get('/dashboard/categories', [DashboardController::class, 'dashboardCategory']);
 Route::get('/dashboard/recently-added', [DashboardController::class, 'dashboardRecentlyAdded']);
+Route::get('/stream/list', [DashboardController::class, 'list']);
+Route::get('/trending/list', [DashboardController::class, 'Trendinglist']);
+
