@@ -12,6 +12,7 @@ use App\Http\Controllers\API\InfluencerController;
 use App\Http\Controllers\API\InfluencerDetailController;
 use App\Http\Controllers\API\LanguageController;
 use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\SocialController;
 use App\Http\Controllers\API\StreamController;
 use App\Http\Controllers\API\StreamUserController;
@@ -85,6 +86,8 @@ Route::middleware('auth:api')->group(function () {
 
 
 
+
+
     Route::delete('/giveaway/delete/{id}', [GiveawayController::class, 'delete']);
     Route::get('/giveaway/list', [GiveawayController::class, 'list']);
 
@@ -93,6 +96,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('/influencer/donate', [GiveawayController::class, 'donateInfluencer']);
+
+
+    Route::post('/review/add', [ReviewController::class, 'addReview']);
 });
 Route::post('/giveaway/add', [GiveawayController::class, 'add']);
 Route::post('/influencer/giveaway/add', [GiveawayController::class, 'addInfluencerOnGiveawy']);
