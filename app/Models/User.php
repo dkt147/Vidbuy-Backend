@@ -67,11 +67,17 @@ class User extends Authenticatable
         return $this->hasMany(Giveaway::class, 'user_id');
     }
 
-    public function influencerCategories() {
+    public function influencerCategories()
+    {
         return $this->hasMany(InfluencerCategory::class);
     }
 
-    public function reviews() {
+    public function reviews()
+    {
         return $this->hasMany(Review::class, 'influencer_id');
+    }
+    public function requestedVideos()
+    {
+        return $this->hasMany(RequestVideo::class, 'user_id');
     }
 }

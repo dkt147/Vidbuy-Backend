@@ -10,6 +10,12 @@ class VideoType extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'price'
     ];
+
+    public function requestVideos()
+    {
+        return $this->hasMany(RequestVideo::class, 'video_type_id');
+    }
 }
