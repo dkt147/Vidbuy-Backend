@@ -18,10 +18,10 @@ class InfluencerDetailController extends Controller
 {
     //
 
-    public function InfluencerCategoryadd(Request $request)
+    public function InfluencerCategoryAdd(Request $request)
     {
         $user = Auth::user();
-        $userId = $user->id;
+
 
         $validator = Validator::make($request->all(), [
             'category_id' => 'required|exists:categories,id',
@@ -31,22 +31,23 @@ class InfluencerDetailController extends Controller
             return ServiceResponse::error('Validation failed', $validator->errors());
         }
 
-        $category = Category::find($request->input('category_id'));
 
+        $categoryId = $request->input('category_id');
+
+
+        $category = Category::find($categoryId);
         if (!$category) {
             return ServiceResponse::error('Category not found');
         }
 
+        $influencerCategory = new InfluencerCategory();
+        $influencerCategory->user_id = $user->id;
+        $influencerCategory->category_id = $categoryId;
+        $influencerCategory->save();
 
-        $influCategory = InfluencerCategory::updateOrCreate(
-            ['user_id' => $userId],
-            [
-                'category_id' => $request->input('category_id'),
-            ]
-        );
-
-        return ServiceResponse::success('Influencer Category processed successfully', $influCategory);
+        return ServiceResponse::success('Category added successfully', $influencerCategory);
     }
+
 
 
 
@@ -66,11 +67,12 @@ class InfluencerDetailController extends Controller
 
 
 
-    public function InfluencerVideoTypeadd(Request $request)
+    public function InfluencerVideoTypeAdd(Request $request)
     {
         $user = Auth::user();
         $userId = $user->id;
 
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'video_type_id' => 'required|exists:video_types,id',
         ]);
@@ -79,23 +81,24 @@ class InfluencerDetailController extends Controller
             return ServiceResponse::error('Validation failed', $validator->errors());
         }
 
-        $type = VideoType::find($request->input('video_type_id'));
+        // Use the validated data directly
+        $videoTypeId = $request->input('video_type_id');
 
-        if (!$type) {
-            return ServiceResponse::error('Video type not found');
+
+        $influencerVideoType = new InfluencerVideoType();
+        $influencerVideoType->user_id = $userId;
+        $influencerVideoType->video_type_id = $videoTypeId;
+
+        $videoType = VideoType::find($videoTypeId);
+        if ($videoType) {
+            $influencerVideoType->video_type_name = $videoType->name;
         }
 
+        $influencerVideoType->save();
 
-        $influvideotype = InfluencerVideoType::updateOrCreate(
-            ['user_id' => $userId],
-            [
-                'video_type_id' => $request->input('video_type_id'),
-                'video_type_name' => $type->name,
-            ]
-        );
-
-        return ServiceResponse::success('Influencer Video Type processed successfully', $influvideotype);
+        return ServiceResponse::success('Influencer Video Type added successfully', $influencerVideoType);
     }
+
 
 
     public function InfluencerSelectedVideoType()

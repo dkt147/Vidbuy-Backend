@@ -143,3 +143,10 @@ Route::get('/dashboard/recently-added', [DashboardController::class, 'dashboardR
 Route::get('/stream/list', [DashboardController::class, 'list']);
 Route::get('/trending/list', [DashboardController::class, 'Trendinglist']);
 
+
+
+
+
+Route::get('/influencer/detail/by-id/{id}', [UserController::class, 'influencerById']);
+
+

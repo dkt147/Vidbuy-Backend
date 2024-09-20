@@ -16,4 +16,8 @@ class Review extends Model
         'message',
         'rating'
     ];
+
+    public function reviewer() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

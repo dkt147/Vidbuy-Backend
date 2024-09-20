@@ -6,6 +6,7 @@ use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\InfluencerCategory;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,9 @@ class UserController extends Controller
 {
     public function InfluencerList()
     {
-        $user = User::where('role_id' , 3)->get();
+        $user = User::where('role_id', 3)->get();
 
         return ServiceResponse::success('User Language updated successfully', $user);
-
     }
 
 
@@ -55,4 +55,33 @@ class UserController extends Controller
     }
 
 
+    public function influencerById(Request $request, $id)
+    {
+        $fromuser = User::with(['influencerCategories.category', 'reviews.reviewer'])
+            ->find($id);
+
+        if (!$fromuser) {
+            return ServiceResponse::error('Influencer not found', 404);
+        }
+
+        $categories = $fromuser->influencerCategories->pluck('category');
+        $enhancedReviews = $fromuser->reviews->map(function ($review) {
+            return [
+                'id' => $review->id,
+                'message' => $review->message,
+                'rating' => $review->rating,
+                'created_at' => $review->created_at,
+                'updated_at' => $review->updated_at,
+                'reviewer' => $review->reviewer
+            ];
+        });
+
+        $data = [
+            'user' => $fromuser,
+            'categories' => $categories,
+            'reviews' => $enhancedReviews
+        ];
+
+        return ServiceResponse::success('Influencer detail retrieved successfully', $data);
+    }
 }
