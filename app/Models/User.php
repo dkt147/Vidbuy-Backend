@@ -30,7 +30,9 @@ class User extends Authenticatable
         'firebase_token',
         'first_login',
         'socket_id',
-        'image'
+        'image',
+        'avg_rating',
+        'review_count '
     ];
 
     /**
