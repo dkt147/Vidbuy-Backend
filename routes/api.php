@@ -121,6 +121,12 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('/request-video', [InfluencerRequestVideoController::class, 'RequestedVideo']);
+
+
+    Route::get('/get/request-video/from-user', [InfluencerRequestVideoController::class, 'GetVideosFromUser']);
+
+
+    Route::get('/get/request-video/from-influencer', [InfluencerRequestVideoController::class, 'GetVideosFromInfluencer']);
 });
 Route::post('/giveaway/add', [GiveawayController::class, 'add']);
 Route::post('/influencer/giveaway/add', [GiveawayController::class, 'addInfluencerOnGiveawy']);

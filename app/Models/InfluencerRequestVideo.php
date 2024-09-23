@@ -18,4 +18,8 @@ class InfluencerRequestVideo extends Model
         'link',
         'slug'
     ];
+
+    public function requestVideo() {
+        return $this->belongsTo(RequestVideo::class, 'request_video_id');
+    }
 }

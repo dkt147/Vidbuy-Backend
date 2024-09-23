@@ -54,4 +54,28 @@ class InfluencerRequestVideoController extends Controller
 
         return ServiceResponse::success('Requested Video submitted successfully and status updated to completed', $review);
     }
+
+
+    public function GetVideosFromUser() {
+        $user = Auth::user();
+
+
+        $requestvideos = RequestVideo::with(['influencer', 'influencerRequestVideos'])
+        ->where('user_id', $user->id)
+        ->get();
+        return ServiceResponse::success('Video retrieved successfully', $requestvideos);
+    }
+
+    public function GetVideosFromInfluencer() {
+        $user = Auth::user();
+
+
+        $requestvideos = RequestVideo::with(['user', 'influencerRequestVideos'])
+        ->where('influencer_id', $user->id)
+        ->get();
+        return ServiceResponse::success('Video retrieved successfully', $requestvideos);
+    }
+
+
+
 }

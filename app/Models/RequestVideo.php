@@ -39,4 +39,8 @@ class RequestVideo extends Model
     {
         return $this->belongsTo(User::class, 'influencer_id');
     }
+
+    public function influencerRequestVideos() {
+        return $this->hasMany(InfluencerRequestVideo::class, 'request_video_id');
+    }
 }
