@@ -92,7 +92,7 @@ class RequestVideoController extends Controller
             ->where('status', 'In Progress')
             ->get();
 
-        return ServiceResponse::success('Pending video requests fetched successfully', $requestedVideos);
+        return ServiceResponse::success('In progress video requests fetched successfully', $requestedVideos);
     }
 
     public function RequestedVideoListForInfluencerCompleted()
