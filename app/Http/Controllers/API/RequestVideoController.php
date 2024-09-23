@@ -82,6 +82,18 @@ class RequestVideoController extends Controller
 
         return ServiceResponse::success('Pending video requests fetched successfully', $requestedVideos);
     }
+    public function RequestedVideoListForInfluencerInprogress()
+    {
+        $influencer = Auth::user();
+
+
+        $requestedVideos = RequestVideo::with(['user', 'videoType'])
+            ->where('influencer_id', $influencer->id)
+            ->where('status', 'In Progress')
+            ->get();
+
+        return ServiceResponse::success('Pending video requests fetched successfully', $requestedVideos);
+    }
 
     public function RequestedVideoListForInfluencerCompleted()
     {

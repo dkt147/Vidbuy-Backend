@@ -106,6 +106,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/video-request/add', [RequestVideoController::class, 'RequestVideo']);
     Route::get('/video-request/list/influencer', [RequestVideoController::class, 'RequestedVideoListForInfluencer']);
     Route::get('/video-request/list/influencer/pending', [RequestVideoController::class, 'RequestedVideoListForInfluencerPending']);
+    Route::get('/video-request/list/influencer/inprogress', [RequestVideoController::class, 'RequestedVideoListForInfluencerInprogress']);
     Route::get('/video-request/list/influencer/completed', [RequestVideoController::class, 'RequestedVideoListForInfluencerCompleted']);
     Route::get('/video-request/list/user', [RequestVideoController::class, 'RequestedVideoListForUser']);
     Route::get('/video-request/delete/{id}', [RequestVideoController::class, 'DeleteRequestedList']);
