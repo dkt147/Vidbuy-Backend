@@ -109,6 +109,20 @@ class RequestVideoController extends Controller
     }
 
 
+    public function RequestedVideoListForInfluencerRejected()
+    {
+        $influencer = Auth::user();
+
+
+        $requestedVideos = RequestVideo::with(['user', 'videoType'])
+            ->where('influencer_id', $influencer->id)
+            ->where('status', 'Rejected')
+            ->get();
+
+        return ServiceResponse::success('Rejected video requests fetched successfully', $requestedVideos);
+    }
+
+
     public function RequestedVideoListForInfluencer()
     {
         $influencer = Auth::user();

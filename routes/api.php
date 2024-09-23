@@ -10,6 +10,7 @@ use App\Http\Controllers\API\GiveawayController;
 use App\Http\Controllers\API\InfluencerCategoryController;
 use App\Http\Controllers\API\InfluencerController;
 use App\Http\Controllers\API\InfluencerDetailController;
+use App\Http\Controllers\API\InfluencerRequestVideoController;
 use App\Http\Controllers\API\LanguageController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\RequestVideoController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserDetailController;
 use App\Http\Controllers\API\VideoTypeController;
 use App\Http\Controllers\API\WalletController;
+use App\Models\InfluencerRequestVideo;
 use App\Models\RequestVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -110,6 +112,15 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/video-request/list/influencer/completed', [RequestVideoController::class, 'RequestedVideoListForInfluencerCompleted']);
     Route::get('/video-request/list/user', [RequestVideoController::class, 'RequestedVideoListForUser']);
     Route::get('/video-request/delete/{id}', [RequestVideoController::class, 'DeleteRequestedList']);
+
+
+
+
+
+
+
+
+    Route::post('/request-video', [InfluencerRequestVideoController::class, 'RequestedVideo']);
 });
 Route::post('/giveaway/add', [GiveawayController::class, 'add']);
 Route::post('/influencer/giveaway/add', [GiveawayController::class, 'addInfluencerOnGiveawy']);
