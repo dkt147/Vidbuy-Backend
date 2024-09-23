@@ -167,4 +167,34 @@ class RequestVideoController extends Controller
 
         return ServiceResponse::success('Requested video deleted successfully', null);
     }
+
+
+
+    public function RejectVideoRequest(Request $request, $requestVideoId)
+    {
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'reason' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+
+        $requestVideo = RequestVideo::find($requestVideoId);
+
+        if (!$requestVideo) {
+            return ServiceResponse::error('Request video not found');
+        }
+
+
+        $requestVideo->status = 'Rejected';
+        $requestVideo->reason = $data['reason'];
+        $requestVideo->save();
+
+        return ServiceResponse::success('Video request rejected', $requestVideo);
+    }
+
 }

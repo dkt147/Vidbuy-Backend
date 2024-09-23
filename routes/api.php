@@ -112,6 +112,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/video-request/list/influencer/completed', [RequestVideoController::class, 'RequestedVideoListForInfluencerCompleted']);
     Route::get('/video-request/list/user', [RequestVideoController::class, 'RequestedVideoListForUser']);
     Route::get('/video-request/delete/{id}', [RequestVideoController::class, 'DeleteRequestedList']);
+    Route::post('/video-request/reject/{requestVideoId}', [RequestVideoController::class, 'RejectVideoRequest']);
 
 
 

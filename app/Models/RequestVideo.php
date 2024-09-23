@@ -23,6 +23,7 @@ class RequestVideo extends Model
         'service_charges',
         'total_price',
         'status',
+        'reason',
     ];
 
     public function user()
