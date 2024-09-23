@@ -63,22 +63,37 @@ class RequestVideoController extends Controller
         $review->delivery_charges = $data['delivery_charges'];
         $review->service_charges = $price;
         $review->total_price = $totalPrice;
+        $review->status = 'Pending';
         $review->save();
 
         return ServiceResponse::success('Video request submitted successfully', $review);
     }
 
 
-    public function RequestedVideoList()
+    public function RequestedVideoListForInfluencer()
     {
-        $user = Auth::user();
+        $influencer = Auth::user();
 
         $requestedVideos = RequestVideo::with(['user', 'videoType'])
-            ->where('influencer_id', $user->id)
+            ->where('influencer_id', $influencer->id)
             ->get();
 
         return ServiceResponse::success('Video request fetched successfully', $requestedVideos);
     }
+
+
+
+    public function RequestedVideoListForUser()
+    {
+        $user = Auth::user();
+
+        $requestedVideos = RequestVideo::with(['influencer', 'videoType'])
+            ->where('user_id', $user->id)
+            ->get();
+
+        return ServiceResponse::success('Video request fetched successfully', $requestedVideos);
+    }
+
 
 
 

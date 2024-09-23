@@ -104,7 +104,8 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('/video-request/add', [RequestVideoController::class, 'RequestVideo']);
-    Route::get('/video-request/list', [RequestVideoController::class, 'RequestedVideoList']);
+    Route::get('/video-request/list/influencer', [RequestVideoController::class, 'RequestedVideoListForInfluencer']);
+    Route::get('/video-request/list/user', [RequestVideoController::class, 'RequestedVideoListForUser']);
     Route::get('/video-request/delete/{id}', [RequestVideoController::class, 'DeleteRequestedList']);
 });
 Route::post('/giveaway/add', [GiveawayController::class, 'add']);

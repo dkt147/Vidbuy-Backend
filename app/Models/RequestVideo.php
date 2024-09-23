@@ -21,7 +21,8 @@ class RequestVideo extends Model
         'required_days',
         'delivery_charges',
         'service_charges',
-        'total_price'
+        'total_price',
+        'status',
     ];
 
     public function user()
@@ -32,5 +33,10 @@ class RequestVideo extends Model
     public function videoType()
     {
         return $this->belongsTo(VideoType::class, 'video_type_id');
+    }
+
+    public function influencer()
+    {
+        return $this->belongsTo(User::class, 'influencer_id');
     }
 }
