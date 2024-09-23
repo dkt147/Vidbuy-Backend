@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Models\InfluencerRequestVideo;
+use App\Models\RequestVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -20,10 +21,9 @@ class InfluencerRequestVideoController extends Controller
         $user = Auth::user();
         $data = $request->all();
 
-
         $validator = Validator::make($data, [
             'request_video_id' => 'required|exists:request_videos,id',
-            'link' => 'required|file|mimes:mp4,avi,mov|max:10240',
+            'link' => 'required|file|mimes:mp4,avi,mov|max:10240', // Adjust file size limit if needed
         ]);
 
         if ($validator->fails()) {
@@ -48,7 +48,10 @@ class InfluencerRequestVideoController extends Controller
         $review->slug = $slug;
         $review->save();
 
-        return ServiceResponse::success('Requested Video submitted successfully', $review);
-    }
+        $requestVideo = RequestVideo::find($data['request_video_id']);
+        $requestVideo->status = 'completed';
+        $requestVideo->save();
 
+        return ServiceResponse::success('Requested Video submitted successfully and status updated to completed', $review);
+    }
 }
