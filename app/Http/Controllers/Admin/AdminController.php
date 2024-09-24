@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Models\FaceIdentity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,19 +14,20 @@ class AdminController extends Controller
     //
     public function pendingInfluencer()
     {
-        $pendingInfluencer = User::where('role_id', 3)
-            ->where('status', 'Pending')
+        $pendingInfluencer = FaceIdentity::where('status', 'Pending')
+            ->with('user')
             ->get();
 
-        return ServiceResponse::success('pending Influencers retrieved successfully', $pendingInfluencer);
+        return ServiceResponse::success('Pending influencers retrieved successfully', $pendingInfluencer);
     }
+
 
 
     public function approvedInfluencer()
     {
-        $approvedInfluencer = User::where('role_id', 3)
-            ->where('status', 'Approved')
-            ->get();
+        $approvedInfluencer = FaceIdentity::where('status', 'Approved')
+        ->with('user')
+        ->get();
 
         return ServiceResponse::success('Approved Influencers retrieved successfully', $approvedInfluencer);
     }
@@ -33,9 +35,9 @@ class AdminController extends Controller
 
     public function cancelledInfluencer()
     {
-        $cancelledInfluencer = User::where('role_id', 3)
-            ->where('status', 'Cancelled')
-            ->get();
+        $cancelledInfluencer = FaceIdentity::where('status', 'Cancelled')
+        ->with('user')
+        ->get();
 
         return ServiceResponse::success('Cancelled Influencers retrieved successfully', $cancelledInfluencer);
     }
@@ -60,6 +62,17 @@ class AdminController extends Controller
         $influencer->status = $request->status;
         $influencer->save();
 
-        return ServiceResponse::success('Influencer status updated successfully', $influencer);
+        $faceIdentity = FaceIdentity::where('user_id', $influencer->id)->first();
+
+        if ($faceIdentity) {
+            $faceIdentity->status = $request->status;
+            $faceIdentity->save();
+        }
+
+        return ServiceResponse::success('Influencer status and FaceIdentity status updated successfully', [
+            'user' => $influencer,
+            'face_identity' => $faceIdentity
+        ]);
     }
+
 }

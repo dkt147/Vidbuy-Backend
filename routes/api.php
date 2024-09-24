@@ -6,6 +6,7 @@ use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\DonationController;
+use App\Http\Controllers\API\FaceIdentityController;
 use App\Http\Controllers\API\GiveawayController;
 use App\Http\Controllers\API\InfluencerCategoryController;
 use App\Http\Controllers\API\InfluencerController;
@@ -128,6 +129,10 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::get('/get/request-video/from-influencer', [InfluencerRequestVideoController::class, 'GetVideosFromInfluencer']);
+
+
+
+    Route::post('/face-identity', [FaceIdentityController::class, 'FaceIdentity']);
 });
 Route::post('/giveaway/add', [GiveawayController::class, 'add']);
 Route::post('/influencer/giveaway/add', [GiveawayController::class, 'addInfluencerOnGiveawy']);
