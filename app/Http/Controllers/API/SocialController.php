@@ -141,7 +141,7 @@ class SocialController extends Controller
 
 
         $user = User::find($data['user_id']);
-        $user->status = 'Approved';
+        $user->status = 'Active';
         $user->save();
 
         // Optionally, delete the code after verification
