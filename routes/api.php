@@ -126,9 +126,12 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::get('/get/request-video/from-user', [InfluencerRequestVideoController::class, 'GetVideosFromUser']);
+    Route::get('/get/rejected/request-video/from-user', [InfluencerRequestVideoController::class, 'getRejectedVideosFromUser']);
+    Route::get('/get/completed/request-video/from-user', [InfluencerRequestVideoController::class, 'getCompletedVideosFromUser']);
 
 
     Route::get('/get/request-video/from-influencer', [InfluencerRequestVideoController::class, 'GetVideosFromInfluencer']);
+    Route::post('/video/reject/{InfluencerrequestVideoId}', [InfluencerRequestVideoController::class, 'RejectVideo']);
 
 
 

@@ -46,10 +46,11 @@ class InfluencerRequestVideoController extends Controller
         $review->request_video_id = $data['request_video_id'];
         $review->link = $video_url;
         $review->slug = $slug;
+        $review->status = 'Completed';
         $review->save();
 
         $requestVideo = RequestVideo::find($data['request_video_id']);
-        $requestVideo->status = 'completed';
+        $requestVideo->status = 'Completed';
         $requestVideo->save();
 
         return ServiceResponse::success('Requested Video submitted successfully and status updated to completed', $review);
@@ -75,6 +76,68 @@ class InfluencerRequestVideoController extends Controller
         ->get();
         return ServiceResponse::success('Video retrieved successfully', $requestvideos);
     }
+
+    public function RejectVideo(Request $request, $InfluencerrequestVideoId)
+    {
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'reason' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+
+        $InfluencerrequestVideo = InfluencerRequestVideo::find($InfluencerrequestVideoId);
+
+
+        $requestVideo = RequestVideo::find($InfluencerrequestVideo->request_video_id);
+
+
+        if (!$InfluencerrequestVideo) {
+            return ServiceResponse::error('video not found');
+        }
+
+
+        $InfluencerrequestVideo->status = 'Rejected';
+        $InfluencerrequestVideo->reason = $data['reason'];
+        $InfluencerrequestVideo->save();
+
+        $requestVideo->status = 'Rejected';
+        $requestVideo->save();
+        return ServiceResponse::success('Video rejected', $InfluencerrequestVideo);
+    }
+
+
+    public function getRejectedVideosFromUser() {
+        $user = Auth::user();
+
+        $requestVideos = RequestVideo::with(['influencer', 'influencerRequestVideos'])
+            ->where('user_id', $user->id)
+            ->where('status', 'Rejected')
+            ->get();
+
+        return ServiceResponse::success('Rejected Videos retrieved successfully', $requestVideos);
+    }
+
+
+
+    public function getCompletedVideosFromUser() {
+        $user = Auth::user();
+
+        $requestVideos = RequestVideo::with(['influencer', 'influencerRequestVideos'])
+            ->where('user_id', $user->id)
+            ->where('status', 'Completed')
+            ->get();
+
+        return ServiceResponse::success('Completed Videos retrieved successfully', $requestVideos);
+    }
+
+
+
+
 
 
 

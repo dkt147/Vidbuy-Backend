@@ -16,7 +16,9 @@ class InfluencerRequestVideo extends Model
         'user_id',
         'request_video_id',
         'link',
-        'slug'
+        'slug',
+        'status',
+        'reason'
     ];
 
     public function requestVideo() {
