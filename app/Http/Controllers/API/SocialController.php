@@ -40,7 +40,7 @@ class SocialController extends Controller
             'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             'password' => 'required|string|min:8',
             'role_id' => 'required|integer|in:2,3', // 2 = UserAccount, 3 = InfluencerAccount
-            'image' => 'required|string',
+            // 'image' => 'required|string',
             'country_id' => 'nullable|integer|exists:countries,id',
         ]);
 
@@ -54,7 +54,11 @@ class SocialController extends Controller
             return self::failure('A user with this email already exists.');
         }
 
-        $imageUrl = Helper::getBase64ImageUrl($data['image']);
+        $imageUrl = null;
+        if(isset($data['image'])){
+            $imageUrl = Helper::getBase64ImageUrl($data['image']);
+        }
+        
 
 
         $countryId = null;
