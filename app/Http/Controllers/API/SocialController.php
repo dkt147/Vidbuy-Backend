@@ -398,4 +398,30 @@ class SocialController extends Controller
         return response()->json(['success' => 'User updated successfully.', 'result' => $editUserData]);
     }
 
+
+
+    public function getUser(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $email = $request->input('email');
+
+
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        return response()->json(['user' => $user]);
+    }
+
 }

@@ -39,6 +39,9 @@ Route::post('/login', [SocialController::class, 'loginViaEmail']);
 Route::post('/forget-password', [SocialController::class, 'forgetPassword']);
 Route::post('/validate-otp-and-change-password', [SocialController::class, 'validateOtpAndChangePassword']);
 
+Route::get('/user-by-email', [SocialController::class, 'getUser']);
+
+
 
 Route::middleware('auth:api')->group(function () {
 
