@@ -16,12 +16,13 @@ class Controller extends BaseController
         $msgArray = array(
             'bool' => true,
             'status' => $code,
-            "message" => $msg
+            "message" => $msg,
+            "result" => $data
         );
 
-        $returnArray = array_merge($msgArray, $data);
+        // $returnArray = array_merge($msgArray, $data);
         // Log::info('app.requests', ['type'=> 'success', 'request' => request()->all(), 'response' => $msg]);
-        return response()->json( $returnArray, $code);
+        return response()->json( $msgArray, $code);
     }
 
     public static function failure($error, $data = [], $code = 409 ){
@@ -29,12 +30,13 @@ class Controller extends BaseController
         $msgArray = array(
             'bool' => false,
             'status' => $code,
-            "message" => $error
+            "message" => $error,
+            "result" => $data
         );
 
-        $returnArray = array_merge($msgArray, $data);
+        // $returnArray = array_merge($msgArray, $data);
         // Log::info('app.requests', ['type'=> 'error', 'request' => request()->all(), 'response' => $error]);
-        return response()->json( $returnArray, $code);
+        return response()->json( $msgArray, $code);
 
     }
 
