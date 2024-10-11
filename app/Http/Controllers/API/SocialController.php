@@ -191,7 +191,7 @@ class SocialController extends Controller
 
         $token = $user->createToken('AuthToken')->accessToken;
 
-        return self::success('Login successful', ['user' => $user, 'token' => $token]);
+        return self::success('Login successful', [ 'result' => [ 'user' => $user, 'token' => $token ] ]);
     }
 
 
