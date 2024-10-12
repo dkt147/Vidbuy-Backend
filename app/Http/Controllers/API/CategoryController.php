@@ -26,11 +26,10 @@ class CategoryController extends Controller
             $list->where('name', 'like', '%' . $search . '%');
         }
 
-        $page = $request->input('page', 1);
+        
+        $list = $list->get();
 
-        $list = $list->paginate(10, ['*'], 'page', $page);
-
-        return response()->json($list);
+        return self::success("Category List", [ 'list' => $list ]);
     }
 
 
