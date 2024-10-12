@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $user = User::where('role_id', 3)->get();
 
-        return ServiceResponse::success('User Language updated successfully', $user);
+        return self::success('User Language updated successfully',['list' => $user] );
     }
 
 
