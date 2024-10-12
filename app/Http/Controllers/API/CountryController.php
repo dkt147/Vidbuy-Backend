@@ -27,7 +27,7 @@ class CountryController extends Controller
 
         $list = $list->paginate(10, ['*'], 'page', $page);
 
-        return response()->json($list);
+        return self::success('countries list', ['list' => $list]);
     }
 
 
