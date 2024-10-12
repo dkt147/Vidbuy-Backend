@@ -87,4 +87,19 @@ class UserController extends Controller
 
         return ServiceResponse::success('Influencer detail retrieved successfully', $data);
     }
+
+    public function updateProfileImage($data)
+    {
+        $user = User::find($data['user_id']);
+
+        $imageUrl = Helper::getBase64ImageUrl($data);
+
+        // Update the teacher's image field
+        $user->image = $imageUrl;
+        $user->save();
+
+        $finalImage = Helper::returnFullImageUrl($imageUrl);
+
+        return ServiceResponse::success('Image added successfully', ['image' => $finalImage]);
+    }
 }

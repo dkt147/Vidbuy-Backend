@@ -49,6 +49,11 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('/user/profile/edit', [SocialController::class, 'Useredit']);
+
+
+
+
+
     Route::post('/influencer/profile/edit', [SocialController::class, 'Influenceredit']);
     Route::post('/delete/account', [SocialController::class, 'deleteUserAccount']);
 

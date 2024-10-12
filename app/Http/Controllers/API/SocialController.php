@@ -303,7 +303,7 @@ class SocialController extends Controller
         $editUserData = User::find($user->id);
 
         if (!$editUserData) {
-            return response()->json(['error' => 'User not found.'], 404);
+            return self::failure('User not found.');
         }
 
         $data = $request->all();
@@ -316,7 +316,7 @@ class SocialController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
+            return self::failure($validator->errors()->first());
         }
 
         $validated = $validator->validated();
@@ -326,14 +326,14 @@ class SocialController extends Controller
             if ($imageUrl) {
                 $validated['image'] = $imageUrl;
             } else {
-                return response()->json(['error' => 'Invalid image format.'], 400);
+                return self::failure('Invalid image format.');
             }
         }
 
 
         $editUserData->update($validated);
 
-        return response()->json(['success' => 'User updated successfully.', 'result' => $editUserData]);
+        return self::success('User updated successfully.', ['user' => $editUserData]);
     }
 
 
@@ -346,7 +346,7 @@ class SocialController extends Controller
         $editUserData = User::find($user->id);
 
         if (!$editUserData) {
-            return response()->json(['error' => 'User not found.'], 404);
+            return self::failure('User not found.');
         }
 
         $data = $request->all();
@@ -362,7 +362,7 @@ class SocialController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
+            return self::failure($validator->errors()->first());
         }
 
         $validated = $validator->validated();
@@ -373,7 +373,7 @@ class SocialController extends Controller
             if ($imageUrl) {
                 $validated['image'] = $imageUrl;
             } else {
-                return response()->json(['error' => 'Invalid image format.'], 400);
+                return self::failure('Invalid image format.');
             }
         }
 
@@ -399,7 +399,7 @@ class SocialController extends Controller
         // Update user data
         $editUserData->update($validated);
 
-        return response()->json(['success' => 'User updated successfully.', 'result' => $editUserData]);
+        return self::success('User updated successfully.', ['user' => $editUserData]);
     }
 
 
