@@ -172,7 +172,7 @@ class SocialController extends Controller
         }
 
         $user = User::where('email', $data['email'])->first();
-        dd($user);
+        // dd($user);
         if (!$user) {
             return self::failure('Invalid Email');
         }
