@@ -114,7 +114,8 @@ class SocialController extends Controller
 
         return self::success('User registered successfully. A verification code has been sent to your email.', [
             'user' => $user,
-            'code' => $verificationCode
+            'code' => $verificationCode,
+            'bool' => true
         ]);
     }
 
@@ -151,7 +152,7 @@ class SocialController extends Controller
         // Optionally, delete the code after verification
         UserCode::where('user_id', $data['user_id'])->delete();
 
-        return self::success('Code verified successfully. User is now active.', ['user' => $user, 'bool' => true]);
+        return self::success('Code verified successfully. User is now active.', ['user' => $user, ]);
     }
 
     public function loginViaEmail(Request $request)
