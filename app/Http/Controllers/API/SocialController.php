@@ -151,7 +151,7 @@ class SocialController extends Controller
 
         // Optionally, delete the code after verification
         UserCode::where('user_id', $data['user_id'])->delete();
-
+        $user['bool']=  true;
         return self::success('Code verified successfully. User is now active.', ['user' => $user, ]);
     }
 
