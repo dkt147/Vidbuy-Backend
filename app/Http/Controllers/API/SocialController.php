@@ -111,11 +111,11 @@ class SocialController extends Controller
         ]);
 
         Mail::to($user->email)->send(new VerificationCodeMail($verificationCode));
-
+        $user['bool']=  true;
         return self::success('User registered successfully. A verification code has been sent to your email.', [
             'user' => $user,
             'code' => $verificationCode,
-            'bool' => true
+            
         ]);
     }
 
