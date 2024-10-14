@@ -40,7 +40,7 @@ class SocialController extends Controller
             'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             'password' => 'required|string|min:8',
             'role_id' => 'required|integer|in:2,3', // 2 = UserAccount, 3 = InfluencerAccount
-            'image' => 'required|string',
+            // 'image' => 'required|string',
             'country_id' => 'nullable|integer|exists:countries,id',
         ]);
 
