@@ -155,7 +155,7 @@ class SocialController extends Controller
         return self::success('Code verified successfully. User is now active.', ['user' => $user, ]);
     }
 
-    public function loginViaEmail(Request $request)
+    public function login(Request $request)
     {
         $data = $request->all();
 

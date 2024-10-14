@@ -35,7 +35,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/signup-via-email', [SocialController::class, 'signupViaEmail']);
 Route::post('/verify-signup', [SocialController::class, 'verifyCode']);
-Route::post('/login', [SocialController::class, 'loginViaEmail']);
+Route::post('/login', [SocialController::class, 'login']);
 Route::post('/forget-password', [SocialController::class, 'forgetPassword']);
 Route::post('/validate-otp-and-change-password', [SocialController::class, 'validateOtpAndChangePassword']);
 
