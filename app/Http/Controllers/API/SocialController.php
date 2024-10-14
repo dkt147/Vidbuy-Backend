@@ -163,7 +163,7 @@ class SocialController extends Controller
         $validation = Validator::make($data, [
             'email' => 'required|email',
             'password' => 'required|string',
-            'role_id' => 'required',
+            // 'role_id' => 'required',
         ]);
 
         // If validation fails
@@ -175,10 +175,6 @@ class SocialController extends Controller
 
         if (!$user) {
             return self::failure('Invalid Email');
-        }
-
-        if ($user->role_id != $data['role_id']) {
-            return self::failure('Invalid credentials');
         }
 
         if (!Hash::check($data['password'], $user->password)) {
